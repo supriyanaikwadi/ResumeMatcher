@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Matcher</title>
+    <style>
+        body {
+            background: #f2f4f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            max-width: 90%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            padding: 6px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h3 {
+            text-align: center;
+            color: #222;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Resume Screening System</h2>
+        <form method="post" action="/predict" enctype="multipart/form-data">
+            <label for="resume">Resume Text:</label>
+            <textarea name="resume" id="resume" rows="4" placeholder="Paste resume text...">{{ request.form.resume }}</textarea>
+
+            <label for="resume_file">Or Upload Resume (PDF or TXT):</label>
+            <input type="file" name="resume_file" id="resume_file" accept=".pdf, .txt">
+
+            <label for="jd">Job Description Text:</label>
+            <textarea name="jd" id="jd" rows="4" placeholder="Paste job description...">{{ request.form.jd }}</textarea>
+
+            <label for="jd_file">Or Upload Job Description (PDF or TXT):</label>
+            <input type="file" name="jd_file" id="jd_file" accept=".pdf, .txt">
+
+            <input type="submit" value="Check Match">
+        </form>
+
+        {% if prediction %}
+        <h3>Prediction: {{ prediction }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
